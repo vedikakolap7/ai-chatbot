@@ -4,11 +4,27 @@ import { Send, Loader2 } from "lucide-react";
 interface ChatInputProps {
   onSend: (message: string) => void;
   disabled: boolean;
+  theme?: 'light' | 'dark';
 }
 
-const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled, theme = 'light' }) => {
   const [input, setInput] = useState("");
   const maxChars = 500;
+
+  const bgColor = theme === 'dark'
+    ? 'rgba(30, 30, 30, 0.3)'
+    : 'rgba(255, 255, 255, 0.3)';
+  const borderColor = theme === 'dark'
+    ? '1px solid rgba(255, 255, 255, 0.2)'
+    : '1px solid rgba(255, 255, 255, 0.4)';
+  const inputBg = theme === 'dark'
+    ? 'rgba(40, 40, 40, 0.5)'
+    : 'rgba(255, 255, 255, 0.5)';
+  const inputBorder = theme === 'dark'
+    ? '1px solid rgba(255, 255, 255, 0.2)'
+    : '1px solid rgba(255, 255, 255, 0.6)';
+  const textColor = theme === 'dark' ? '#e5e7eb' : '#1F1F1F';
+  const placeholderColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.4)';
 
   const handleSubmit = () => {
     if (input.trim() && !disabled) {
@@ -25,42 +41,53 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
   };
 
   return (
-    <div
-      style={{
-        background: "rgba(255, 255, 255, 0.3)",
-        backdropFilter: "blur(25px) saturate(160%)",
-        WebkitBackdropFilter: "blur(25px) saturate(160%)",
-        borderRadius: 24,
-        border: "1px solid rgba(255, 255, 255, 0.4)",
-        padding: "12px 18px",
-        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-      }}
-    >
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value.slice(0, maxChars))}
-        onKeyDown={handleKeyDown}
-        placeholder="Write a message..."
-        disabled={disabled}
-        rows={1}
+    <>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .chat-input-textarea::placeholder {
+            color: ${placeholderColor} !important;
+          }
+        `
+      }} />
+      <div
         style={{
-          flex: 1,
-          background: "rgba(255, 255, 255, 0.5)",
-          border: "1px solid rgba(255, 255, 255, 0.6)",
-          borderRadius: 18,
-          padding: "14px 18px",
-          fontSize: 15,
-          color: "#1F1F1F",
-          resize: "none",
-          outline: "none",
-          height: "50px",
-          boxShadow: "inset 0 2px 8px rgba(0, 0, 0, 0.05)",
-          transition: "all 0.3s ease",
+          background: bgColor,
+          backdropFilter: "blur(25px) saturate(160%)",
+          WebkitBackdropFilter: "blur(25px) saturate(160%)",
+          borderRadius: 24,
+          border: borderColor,
+          padding: "12px 18px",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
         }}
-      />
+      >
+        <textarea
+          className="chat-input-textarea"
+          value={input}
+          onChange={(e) => setInput(e.target.value.slice(0, maxChars))}
+          onKeyDown={handleKeyDown}
+          placeholder="Write a message..."
+          disabled={disabled}
+          rows={1}
+          style={{
+            flex: 1,
+            background: inputBg,
+            border: inputBorder,
+            borderRadius: 18,
+            padding: "14px 18px",
+            fontSize: 15,
+            color: textColor,
+            resize: "none",
+            outline: "none",
+            height: "50px",
+            boxShadow: theme === 'dark' 
+              ? "inset 0 2px 8px rgba(0, 0, 0, 0.3)"
+              : "inset 0 2px 8px rgba(0, 0, 0, 0.05)",
+            transition: "all 0.3s ease",
+          }}
+        />
 
       <button
         onClick={handleSubmit}
@@ -75,7 +102,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
             : "linear-gradient(145deg, #2E2E2E, #1A1A1A)",
           color: "#fff",
           cursor: disabled || !input.trim() ? "not-allowed" : "pointer",
-          display: "flex",
+          //display: "flex",
           alignItems: "center",
           justifyContent: "center",
           boxShadow: disabled
@@ -91,6 +118,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend, disabled }) => {
         )}
       </button>
     </div>
+    </>
   );
 };
 

@@ -156,6 +156,10 @@ node server.js
 - [x] **API Route for Models** - Helper endpoint to check available Gemini models
 - [x] **CORS Support** - Proper CORS headers for API routes
 - [x] **Reconnection Logic** - Automatic reconnection on Socket.IO disconnection
+- [x] **Clear Chat Functionality** - Button to clear all messages with confirmation dialog
+- [x] **Copy to Clipboard** - Copy button on each message (appears on hover) with visual feedback
+- [x] **Animated Typing Indicator** - Smooth animated dots showing AI is typing
+- [x] **Dark/Light Theme Toggle** - Theme switcher with persistent preference (localStorage) and system preference detection
 
 ### UI/UX Features
 
@@ -164,7 +168,11 @@ node server.js
 - [x] Visual distinction between user and AI messages
 - [x] Disabled state for input during AI response
 - [x] Loading spinner during message processing
-- [x] "AI is typing..." indicator
+- [x] Animated typing indicator with three bouncing dots
+- [x] Dark mode with full theme support across all components
+- [x] Theme persistence using localStorage
+- [x] Copy button with checkmark confirmation on messages
+- [x] Clear chat button with confirmation dialog
 
 ##  Time Spent
 
